@@ -50,6 +50,8 @@ visited the course overview page.
 
 ### 1.2 Measuring Viariability
 
+Before we confuct the experiment, Udacity collected daily values for unique cookies, enrollments,click-through-probability,gross conversion, retention, net conversion as baseline data. 
+
 Baseline table：
 
 | Title                                              | Measure |
@@ -62,6 +64,7 @@ Baseline table：
 | Probability of payment, given enroll:               | 0.53      |
 | Probability of payment, given click:                | 0.1093125 |
 
+We preditct we need approximately 5000 cookies per day in each group.
 Baed on table above,we can have calculation results:
 
 | Evaluation         | Gross conversion | Retension | Net conversion |
