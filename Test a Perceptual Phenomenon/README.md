@@ -1,1 +1,1 @@
-
+In this project , I test a perceptual phenomenon called stroop effect, first we split experiment into two groups,Congruent and Incongruent , then we test whether Congruent and Incongruent group have same population mean.
