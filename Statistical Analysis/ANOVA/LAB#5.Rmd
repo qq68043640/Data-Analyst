@@ -1,0 +1,127 @@
+---
+title: "LAB #5"
+output: html_document
+---
+
+## Q1: Are there significant differences in ratings of specific product/service attributes in the 2014CustomerSurvey.csv data file?
+Load CustomerSurvey2014 data
+
+```{r CustomerSurvey}
+CustomerSurvey2014<- read.csv("c:/users/Kun Hu/desktop/CustomerSurvey2014.csv")
+str(CustomerSurvey2014)
+```
+
+Rearrange dataframe to fit avo function
+```{r }
+total<- c(CustomerSurvey2014$Quality,CustomerSurvey2014$Ease.of.Use,CustomerSurvey2014$Price,CustomerSurvey2014$Service)
+title<- c(rep("Quality",time=length(CustomerSurvey2014$Quality)),rep("Ease_of_use",time=length(CustomerSurvey2014$Ease.of.Use)),rep("Price",time=length(CustomerSurvey2014$Price)),rep("Service",time=length(CustomerSurvey2014$Service)))
+data<- data.frame(total,title)
+str(data)
+
+```
+
+Use aov to fit an analysis of variance model, use anova to compute aov result
+```{r }
+results=aov(total~title,data=data)
+
+anova(results)
+```
+
+We can see the p-value is less than 0.05 which means there are significance in attributes.
+
+
+## Q2:In the data file OnTimeDelivery.csv, has the proportion of on-time deliveries in 2014 significantly improved since 2010?
+
+Load data OnTimeDelivery.csv
+```{r}
+OnTimeDelivery<- read.csv("c:/users/Kun Hu/desktop/OnTimeDelivery.csv")
+str(OnTimeDelivery)
+head(OnTimeDelivery)
+```
+
+Subset data to 2010 and 2014
+
+``` {r}
+
+OnTimeDelivery_10 <- OnTimeDelivery[1:12,]
+OnTimeDelivery_14 <- OnTimeDelivery[49:60,]
+
+```
+
+Calculate ontime rate
+``` {r}
+p10<-sum(OnTimeDelivery_10$Number.On.Time)/sum(OnTimeDelivery_10$Number.of.deliveries)
+p14<- sum(OnTimeDelivery_14$Number.On.Time)/sum(OnTimeDelivery_14$Number.of.deliveries)
+```
+
+perform proportions test
+```{r}
+n=12
+z<- (p14-p10)/sqrt(p10*(1-p10)/n)
+z
+qnorm(0.95)
+```
+
+Since Z value not exceed the critical value , we think there are no significance imrpoved since 2010
+
+## Q3 :Have the data in the data file DefectsAfterDelivery.csv changed significantly over the past 5 years?
+
+Load data 
+```{r}
+DefectsAfterDelivery<- read.csv("c:/Users/Kun Hu/desktop/DefectsAfterDelivery.csv")
+head(DefectsAfterDelivery)
+```
+
+Reconstruct data drame
+
+```{r}
+defects<- c(DefectsAfterDelivery$X2010,DefectsAfterDelivery$X2011,DefectsAfterDelivery$X2012,DefectsAfterDelivery$X2013,DefectsAfterDelivery$X2014)
+
+Xyear<- c(rep("X2010",time=length(DefectsAfterDelivery$X2010)),rep("X2011",time=length(DefectsAfterDelivery$X2011)),rep("X2012",time=length(DefectsAfterDelivery$X2012)),rep("X2013",time=length(DefectsAfterDelivery$X2013)),rep("X2014",time=length(DefectsAfterDelivery$X2014)))
+
+defects_data<- data.frame(defects,Xyear)
+```
+
+Use aov build a model , then fit with anova
+
+```{r}
+result=aov(defects~Xyear,data=defects_data)
+anova(result)
+
+```
+
+Since P value is less than 0.05, we can make conclusion that defects changed significantly over past 5 years.
+
+## Q4:Although engineering has collected data on alternative process costs for building transmissionsin the data file TransmissionCosts.csv, why didn't they reach a conclusion as to whether one of the proposed processes is better than the current process?
+
+First load data
+```{r}
+TransmissionCosts<- read.csv("c:/users/Kun Hu/desktop/TransmissionCosts.csv")
+head(TransmissionCosts)
+str(TransmissionCosts)
+```
+
+Use z-test to check if A or B significant better than current process
+``` {r}
+t.test(TransmissionCosts$Process.A,TransmissionCosts$Current,alternative ="less")
+t.test(TransmissionCosts$Process.B,TransmissionCosts$Current,alternative ="less")
+```
+
+P-value is 0.389 and 0.8307 which is larger than 0.05, so there are no significant mean difference.
+
+## Q5: Are there differences in employee retention due to gender, college graduation status, or whether the employee is from the local area in the data in the ata file EmployeeRetention.csv?
+
+Load data
+```{r}
+EmployeeRetention<- read.csv("c:/users/Kun Hu/desktop/EmployeeRetention.csv")
+head(EmployeeRetention)
+```
+```{r}
+chisq.test(EmployeeRetention$Gender,EmployeeRetention$College.Grad)
+
+chisq.test(EmployeeRetention$Gender,EmployeeRetention$Local)
+
+
+```
+
+We can see p-value is 0.6013 and 0.9864 which is larger than 0.05 , so there's no significant difference between gender, graduation or local.
