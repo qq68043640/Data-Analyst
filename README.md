@@ -1,2 +1,2 @@
 
-### This repository is for projects I finished at Udacity for Data Analyst Program
+### This repository is for projects I finished related with data analyst 
