@@ -1,0 +1,21 @@
+---
+title: "Regression analysis"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r }
+Elevation<- c(600,700,1000,1300,1200,1450,950,1100,2000,1750,1350,1500)
+Temperature<-c(45,50,46,47,35,39,40,30,50,29,50,40)
+plot(Elevation,Temperature)
+abline(lm(Temperature~Elevation),col="red")
+```
+We can use summary to dig deeper into linear model
+```{r}
+lm1<- lm(Elevation~Temperature)
+summary(lm1)
+
+```
+
+The result shows from P-value that way larger than 0.05, so elevation may not be a good independent variable to temperature
