@@ -1,0 +1,27 @@
+---
+title: "Multiple"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+```{r }
+Multiple<- read.csv("c:/users/kun hu/desktop/Multiple.csv")
+```
+
+```{r}
+pairs(Multiple)
+```
+
+```{r}
+linear<- lm(Multiple$Price~Multiple$Size+Multiple$Tax+Multiple$Bedroom)
+```
+
+```{r}
+summary(linear)
+```
+
+We can see only Size has significant impact on sales price based on p-value=0.0251<0.05
+
+
