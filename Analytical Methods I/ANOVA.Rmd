@@ -1,6 +1,8 @@
 ---
 title: "One way ANOVA"
-output: rmarkdown::github_document
+output: 
+    html_document:
+      keep_md: true
 ---
 
 
