@@ -1,6 +1,6 @@
 ---
 title: "One way ANOVA"
-output: md_document
+output: github_document
 ---
 
 
