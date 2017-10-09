@@ -1,7 +1,6 @@
 ---
 title: "One way ANOVA"
-output:
-  rmarkdown::github_document
+output: rmarkdown::github_document
 ---
 
 
