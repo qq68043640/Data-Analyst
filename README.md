@@ -1,2 +1,2 @@
 
-### Data Science Project and Homework
+### Data Science Projects and Homeworks
