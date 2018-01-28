@@ -1,0 +1,13 @@
+---
+title: "Intro to Machine Learning with R and Caret"
+output: word_document
+---
+
+```{R}
+library(caret)
+library(doSNOW)
+train<-read.csv("C:/Users/Kun Hu/Desktop/Titanic/train.csv")
+View(train)
+
+
+```
