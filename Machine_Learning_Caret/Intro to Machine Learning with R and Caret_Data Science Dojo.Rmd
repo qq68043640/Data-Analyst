@@ -1,4 +1,4 @@
----
+  ---
 title: "Intro to Machine Learning with R and Caret"
 output: word_document
 ---
@@ -6,8 +6,43 @@ output: word_document
 ```{R}
 library(caret)
 library(doSNOW)
-train<-read.csv("C:/Users/Kun Hu/Desktop/Titanic/train.csv")
+train<-read.csv("C:/Users/iceti/Documents/GitHub/Data-Analyst/Machine_Learning_Caret/train.csv")
 View(train)
 
+```
+Replace missing embardked values with mode
+```{R}
+table(train$Embarked)
+train$Embarked[train$Embarked==""]<-"S"
+```
+Add a feature for tracking missing ages
+```{r}
+summary(train$Age)
+train$missingAge<-ifelse(is.na(train$Age),"Y","N")
+```
+Add a feature for family size
+```{r}
+train$FamilySize<-1+train$SibSp+train$Parch
+```
 
+Set up factor
+
+```{r}
+train$Survived<-as.factor(train$Survived)
+train$Pclass<-as.factor(train$Pclass)
+train$Sex<-as.factor(train$Sex)
+train$Embarked<-as.factor(train$Embarked)
+```
+
+
+
+```{r}
+```
+
+
+```{r}
+```
+```{r}
+```
+```{r}
 ```
