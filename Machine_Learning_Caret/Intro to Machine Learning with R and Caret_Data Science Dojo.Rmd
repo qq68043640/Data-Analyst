@@ -6,8 +6,9 @@ output: word_document
 ```{R}
 library(caret)
 library(doSNOW)
-train<-read.csv("C:/Users/iceti/Documents/GitHub/Data-Analyst/Machine_Learning_Caret/train.csv")
-View(train)
+#train<-read.csv("C:/Users/iceti/Documents/GitHub/Data-Analyst/Machine_Learning_Caret/train.csv")
+train<-read.csv("C:/Users/kun hu/Documents/GitHub/Data-Analyst/Machine_Learning_Caret/train.csv")
+#View(train)
 
 ```
 Replace missing embardked values with mode
@@ -33,16 +34,45 @@ train$Pclass<-as.factor(train$Pclass)
 train$Sex<-as.factor(train$Sex)
 train$Embarked<-as.factor(train$Embarked)
 ```
-
-
-
+Subset data to feature we wish to keep/use
 ```{r}
+features<-c("Survived","Pclass","Sex","Age","SibSp",
+            "Parch","Fare","Embarked","missingAge",
+            "FamilySize")
+train<-train[,features]
+str(train)
 ```
 
+ First, tranform all feature to dummy variables
+```{r}
+dummy.vars<-dummyVars(~.,data=train[,-1])
+train.dummy<-predict(dummy.vars,train[,-1])
+```
+Impute age
+```{r}
+pre.process<-preProcess(train.dummy,method="bagImpute")
+imputed.data<-predict(pre.process,train.dummy)
+#impute age to original data
+train$Age<-imputed.data[,6]
+
+```
+
+Use caret to create a 70/30%split of the training data,
+keeping rhe proportions of the Survived class label the same across the splits
 
 ```{r}
+set.seed(54321)
+indexes<-createDataPartition(train$Survived,time=1,p=0.7,list=FALSE)
+titanic.train<-train[indexes,]
+titanic.test<-train[-indexes,]
+
 ```
+
+Examine the proportions of survived class lable across the datasets
 ```{r}
-```
-```{r}
+prop.table(table(train$Survived))
+prop.table(table(titanic.train$Survived))
+prop.table(table(titanic.test$Survived))
+
+
 ```
