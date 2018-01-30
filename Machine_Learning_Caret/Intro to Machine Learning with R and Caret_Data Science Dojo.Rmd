@@ -73,6 +73,17 @@ Examine the proportions of survived class lable across the datasets
 prop.table(table(train$Survived))
 prop.table(table(titanic.train$Survived))
 prop.table(table(titanic.test$Survived))
+```
+Set up caret to perform 10-fold cross validation repeated 3 times and to use a grid search for optimal model hyperparameter
+```{r}
+train.control<- trainControl(method="repeatedcv",
+                              number=10,
+                              repeats=3,
+                              search="grid")
+```
 
+Leverage a grid search of hyperparameters for xgboost.
+```{R}
+tune.grid<-expand.grid()
 
 ```
