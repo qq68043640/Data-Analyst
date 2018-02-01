@@ -84,6 +84,33 @@ train.control<- trainControl(method="repeatedcv",
 
 Leverage a grid search of hyperparameters for xgboost.
 ```{R}
-tune.grid<-expand.grid()
+tune.grid<-expand.grid(eta=c(0.05,0.075,0.1),
+                       nrounds=c(50,75,100),
+                       max_depth=6:8,
+                       min_child_weight=c(2.0,2.25,2.5),
+                       colsample_bytree=c(0.3,0.4,0.5),
+                       gamma=0,
+                       subsample=1)
+```
+
+```{r}
+library(xgboost)
+cl<-makeCluster(10,type="SOCK")
+#regeister cluster so that caret will know to train in parallel
+registerDoSNOW(cl)
+#train the xgboost model using 10-fold CV repeated 3 times
+#and a hyperparameter grid search to retain the optimal model
+caret.cv<-train(Survived~.,
+                data=titanic.train,
+                method="xgbTree",
+                tuneGrid=tune.grid,
+                trControl=train.control)
+stopCluster(cl)
+```
+
+```{r}
+#Examine 
+caret.cv
+
 
 ```
